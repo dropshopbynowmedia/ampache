@@ -136,8 +136,23 @@ abstract class database_object
         self::$object_cache[$index][$object_id] = $value;
 
         return true;
-    }
-    // add_to_cache
+    } // add_to_cache
+
+    /**
+     * get_cache_count
+     * This counts the size of the specified index in the cache
+     * @param $index
+     * @param array $data
+     * @return boolean
+     */
+    public static function get_cache_count($index)
+    {
+        if (!self::$_enabled) {
+            return false;
+        }
+
+        return count(self::$object_cache[$index]);
+    } // get_cache_count
 
     /**
      * remove_from_cache
