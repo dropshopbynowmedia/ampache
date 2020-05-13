@@ -117,7 +117,7 @@ abstract class database_object
     /**
      * add_to_cache
      * This adds the specified object to the specified index in the cache
-     * @param $index
+     * @param string $index
      * @param $object_id
      * @param array $data
      * @return boolean
@@ -141,9 +141,8 @@ abstract class database_object
     /**
      * get_cache_count
      * This counts the size of the specified index in the cache
-     * @param $index
-     * @param array $data
-     * @return boolean
+     * @param string $index
+     * @return integer
      */
     public static function get_cache_count($index)
     {
