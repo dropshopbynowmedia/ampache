@@ -80,6 +80,19 @@ database_password = password
 
 
 ;#########################################################
+; Redis                                                  #
+;#########################################################
+
+; Hostname of your redis server
+; DEFAULT: 127.0.0.1
+;redis_hostname = "127.0.0.1"
+
+; Port to use when connecting to redis
+; DEFAULT: 6379
+;redis_port = "6379"
+
+
+;#########################################################
 ; Session and Security                                   #
 ;#########################################################
 
