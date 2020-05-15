@@ -77,7 +77,8 @@ class Playlist extends playlist_object
     public static function build_cache($ids)
     {
         if (count($ids)) {
-            $idlist     = '(' . implode(',', $ids) . ')';
+            $not_cached = array_diff($ids, parent::get_cache_index('playlist'));
+            $idlist     = '(' . implode(',', $not_cached) . ')';
             $sql        = "SELECT * FROM `playlist` WHERE `id` IN $idlist";
             $db_results = Dba::read($sql);
 

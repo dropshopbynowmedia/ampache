@@ -106,6 +106,7 @@ function run_cron_cache($user_id)
              * Fill rating and hear/flag details for each user
              */
             foreach ($users as $user_id) {
+                debug_event('cron', 'Filling memory cache for user: ' . $user_id, 5);
                 // artists
                 Rating::build_cache('artist', $artists, $user_id);
                 Userflag::build_cache('artist', $artists, $user_id);

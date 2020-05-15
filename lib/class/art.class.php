@@ -112,8 +112,9 @@ class Art extends database_object
         if (!count($object_ids)) {
             return false;
         }
-        $uidlist    = '(' . implode(',', $object_ids) . ')';
-        $sql        = "SELECT `object_type`, `object_id`, `mime`, `size` FROM `image` WHERE `object_id` IN $uidlist";
+        $not_cached = array_diff($object_ids, parent::get_cache_index('art'));
+        $idlist     = '(' . implode(',', $not_cached) . ')';
+        $sql        = "SELECT `object_type`, `object_id`, `mime`, `size` FROM `image` WHERE `object_id` IN $idlist";
         if ($type !== null) {
             $sql .= " and `object_type` = '$type'";
         }

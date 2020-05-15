@@ -115,6 +115,24 @@ abstract class database_object
     } // get_from_cache
 
     /**
+     * get_cache_index
+     * This attempts to retrieve the specified object from the cache we've got here
+     * @param string $index
+     * @return array
+     */
+    public static function get_cache_index($index)
+    {
+        // Check if the object is set
+        if (isset(self::$object_cache[$index])) {
+            self::$cache_hit++;
+
+            return self::$object_cache[$index];
+        }
+
+        return array();
+    } // get_from_cache
+
+    /**
      * add_to_cache
      * This adds the specified object to the specified index in the cache
      * @param string $index

@@ -197,9 +197,6 @@ if (isset($auth) && $auth['success'] && isset($user)) {
     // fix preferences that are missing for user
     User::fix_preferences($user->id);
 
-    //build the user cache / refill if cleared recently
-    Ajax::action('?page=index&action=build_cache', '');
-
     /* Make sure they are actually trying to get to this site and don't try
      * to redirect them back into an admin section
      */

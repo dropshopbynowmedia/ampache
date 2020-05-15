@@ -79,7 +79,8 @@ class Tag extends database_object implements library_item
         if (!is_array($ids) || !count($ids)) {
             return false;
         }
-        $idlist     = '(' . implode(',', $ids) . ')';
+        $not_cached = array_diff($ids, parent::get_cache_index('tag'));
+        $idlist     = '(' . implode(',', $not_cached) . ')';
         $sql        = "SELECT * FROM `tag` WHERE `id` IN $idlist";
         $db_results = Dba::read($sql);
 
