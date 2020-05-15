@@ -338,6 +338,10 @@ switch ($_REQUEST['action']) {
         $results['songs'] = ob_get_contents();
         ob_end_clean();
     break;
+    case 'build_cache':
+        run_cron_cache(Core::get_global('user')->id);
+        ob_end_clean();
+        break;
     default:
         $results['rfc3514'] = '0x1';
     break;
