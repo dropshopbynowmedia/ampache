@@ -135,8 +135,8 @@ function run_cron_cache($user_id)
                         Rating::build_cache('podcast', $podcasts, $user_id);
                         Userflag::build_cache('podcast', $podcasts, $user_id);
                         // podcast_episodes
-                        $podcast = New Podcast($podcast_id);
-                        $podcast_episodes = $catalog->get_podcast_ids();
+                        $podcast          = New Podcast($podcast_id);
+                        $podcast_episodes = $podcast->get_episodes();
                         Rating::build_cache('podcast_episode', $podcast_episodes, $user_id);
                         Userflag::build_cache('podcast_episode', $podcast_episodes, $user_id);
                     } // end foreach $podcasts
