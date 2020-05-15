@@ -126,7 +126,7 @@ abstract class database_object
         if (isset(self::$object_cache[$index])) {
             self::$cache_hit++;
 
-            return self::$object_cache[$index];
+            return array_keys(self::$object_cache[$index]);
         }
 
         return array();
