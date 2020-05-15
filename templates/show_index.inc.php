@@ -67,4 +67,6 @@ if (Art::is_enabled()) {
         require_once AmpConfig::get('prefix') . UI::find_template('show_recently_played.inc.php'); ?>
 </div>
 <?php
+    //build the user cache / refill if cleared recently
+    Ajax::run(Ajax::action('?page=index&action=build_cache', ''));
     } ?>
