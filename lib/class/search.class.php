@@ -299,6 +299,18 @@ class Search extends playlist_object
             'sql' => '>'
         );
 
+        $this->basetypes['recent'][] = array(
+            'name' => 'add',
+            'description' => T_('recently added songs'),
+            'sql' => '`addition_time`'
+        );
+
+        $this->basetypes['recent'][] = array(
+            'name' => 'upd',
+            'description' => T_('recently updated songs'),
+            'sql' => '`update_time`'
+        );
+
         $this->basetypes['user_numeric'][] = array(
             'name' => 'love',
             'description' => T_('has loved'),
@@ -699,6 +711,13 @@ class Search extends playlist_object
             'label' => T_('Updated'),
             'type' => 'date',
             'widget' => array('input', 'datetime-local')
+        );
+
+        $this->types[] = array(
+            'name' => 'recent',
+            'label' => T_('Recently'),
+            'type' => 'recent',
+            'widget' => array('input', 'number')
         );
 
         $catalogs = array();
@@ -2138,6 +2157,9 @@ class Search extends playlist_object
                 case 'updated':
                     $input   = strtotime($input);
                     $where[] = "`song`.`update_time` $sql_match_operator $input";
+                    break;
+                case 'recent':
+                    $where[] = "`song`.`id` IN (SELECT `id` from `song` ORDER BY $sql_match_operator DESC LIMIT $input)";
                     break;
                 case 'metadata':
                     // Need to create a join for every field so we can create and / or queries with only one table
