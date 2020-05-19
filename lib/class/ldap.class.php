@@ -151,7 +151,6 @@ class LDAP
      */
     private static function bind($link, $username = null, $password = null)
     {
-
         if ($username === null && $password === null) {
             $username = AmpConfig::get('ldap_username', '');
             $password = AmpConfig::get('ldap_password', '');
