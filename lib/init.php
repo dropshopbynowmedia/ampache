@@ -274,7 +274,6 @@ if (AmpConfig::get('redis_hostname') && AmpConfig::get('redis_port')) {
     $redis = new Redis();
     $redis->connect(AmpConfig::get('redis_hostname'), AmpConfig::get('redis_port'));
     $GLOBALS['redis'] = $redis;
-    debug_event('init', 'REDIS CONNECTION ' . $GLOBALS['redis']->ping(), 5);
 }
 
 // set a mobile tag so we can change things for mobile in the future
