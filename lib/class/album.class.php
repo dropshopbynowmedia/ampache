@@ -303,6 +303,9 @@ class Album extends database_object implements library_item
         }
         $not_cached = array_diff($ids, parent::get_cache_index('album'));
         $idlist     = '(' . implode(',', $not_cached) . ')';
+        if ($idlist == '()') {
+            return false;
+        }
         $sql        = "SELECT * FROM `album` WHERE `id` IN $idlist";
         $db_results = Dba::read($sql);
 

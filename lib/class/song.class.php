@@ -494,7 +494,6 @@ class Song extends database_object implements media, library_item
         }
         $not_cached = array_diff($song_ids, parent::get_cache_index('song'));
         $idlist     = '(' . implode(',', $not_cached) . ')';
-        // Callers might have passed array(false) because they are dumb
         if ($idlist == '()') {
             return false;
         }

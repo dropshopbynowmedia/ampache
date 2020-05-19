@@ -250,6 +250,9 @@ class Video extends database_object implements media, library_item
         }
         $not_cached = array_diff($ids, parent::get_cache_index('video'));
         $idlist     = '(' . implode(',', $not_cached) . ')';
+        if ($idlist == '()') {
+            return false;
+        }
         $sql        = "SELECT * FROM `video` WHERE `video`.`id` IN $idlist";
         $db_results = Dba::read($sql);
 

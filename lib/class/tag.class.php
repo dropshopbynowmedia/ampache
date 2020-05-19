@@ -81,6 +81,9 @@ class Tag extends database_object implements library_item
         }
         $not_cached = array_diff($ids, parent::get_cache_index('tag'));
         $idlist     = '(' . implode(',', $not_cached) . ')';
+        if ($idlist == '()') {
+            return false;
+        }
         $sql        = "SELECT * FROM `tag` WHERE `id` IN $idlist";
         $db_results = Dba::read($sql);
 

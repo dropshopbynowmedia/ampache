@@ -114,6 +114,9 @@ class Art extends database_object
         }
         $not_cached = array_diff($object_ids, parent::get_cache_index('art'));
         $idlist     = '(' . implode(',', $not_cached) . ')';
+        if ($idlist == '()') {
+            return false;
+        }
         $sql        = "SELECT `object_type`, `object_id`, `mime`, `size` FROM `image` WHERE `object_id` IN $idlist";
         if ($type !== null) {
             $sql .= " and `object_type` = '$type'";

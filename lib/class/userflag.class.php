@@ -68,6 +68,9 @@ class Userflag extends database_object
         $userflags  = array();
         $not_cached = array_diff($ids, parent::get_cache_index('userflag_' . $type . '_user' . $user_id));
         $idlist     = '(' . implode(',', $not_cached) . ')';
+        if ($idlist == '()') {
+            return false;
+        }
         $sql        = "SELECT `object_id`, `date` FROM `user_flag` " .
                       "WHERE `user` = ? AND `object_id` IN $idlist " .
                       "AND `object_type` = ?";

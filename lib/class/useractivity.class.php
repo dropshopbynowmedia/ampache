@@ -72,6 +72,9 @@ class Useractivity extends database_object
 
         $not_cached = array_diff($ids, parent::get_cache_index('user_activity'));
         $idlist     = '(' . implode(',', $not_cached) . ')';
+        if ($idlist == '()') {
+            return false;
+        }
         $sql        = "SELECT * FROM `user_activity` WHERE `id` IN $idlist";
         $db_results = Dba::read($sql);
 
