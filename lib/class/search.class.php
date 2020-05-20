@@ -2180,12 +2180,12 @@ class Search extends playlist_object
                     }
                     break;
                 case 'recent_added':
-                    $where[]         = "`addition_time`.`id` IS NOT NULL";
+                    $where[]          = "`addition_time`.`id` IS NOT NULL";
                     $addition_string  = "LEFT JOIN (SELECT `id` from `song` ORDER BY $sql_match_operator DESC LIMIT $input) as `addition_time` ON `song`.`id` = `recent`.`id`";
                     $join['addition'] = true;
                     break;
                 case 'recent_updated':
-                    $where[]         = "`update_time`.`id` IS NOT NULL";
+                    $where[]        = "`update_time`.`id` IS NOT NULL";
                     $update_string  = "LEFT JOIN (SELECT `id` from `song` ORDER BY $sql_match_operator DESC LIMIT $input) as `update_time` ON `song`.`id` = `recent`.`id`";
                     $join['update'] = true;
                     break;
