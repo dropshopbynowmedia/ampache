@@ -299,15 +299,15 @@ class Search extends playlist_object
             'sql' => '>'
         );
 
-        $this->basetypes['recent'][] = array(
+        $this->basetypes['recent_added'][] = array(
             'name' => 'add',
-            'description' => T_('added songs'),
+            'description' => T_('# songs'),
             'sql' => '`addition_time`'
         );
 
-        $this->basetypes['recent'][] = array(
+        $this->basetypes['recent_updated'][] = array(
             'name' => 'upd',
-            'description' => T_('updated songs'),
+            'description' => T_('# songs'),
             'sql' => '`update_time`'
         );
 
