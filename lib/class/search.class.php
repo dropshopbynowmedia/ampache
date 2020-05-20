@@ -2159,6 +2159,7 @@ class Search extends playlist_object
                     $where[] = "`song`.`update_time` $sql_match_operator $input";
                     break;
                 case 'recent':
+                    $recent_string  = "INNER JOIN (SELECT `id` from `song` ORDER BY $sql_match_operator DESC LIMIT $input) as `recent` ON `song`.`id` = `recent`.`id`";
                     $join['recent'] = true;
                     break;
                 case 'metadata':
@@ -2291,7 +2292,7 @@ class Search extends playlist_object
             }
         }
         if ($join['recent']) {
-            $table['recent'] = "INNER JOIN (SELECT `id` from `song` ORDER BY $sql_match_operator DESC LIMIT $input) as `recent` ON `song`.`id` = `recent`.`id`";
+            $table['recent'] = $recent_string;
         }
         if ($join['catalog']) {
             $table['catalog'] = "LEFT JOIN `catalog` AS `catalog_se` ON `catalog_se`.`id`=`song`.`catalog`";
