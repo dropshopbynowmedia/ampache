@@ -2158,13 +2158,13 @@ class Search extends playlist_object
                     $where[] = "`song`.`license` $sql_match_operator '$input'";
                 break;
                 case 'added':
-                    $input = strtotime($input);
+                    $input   = strtotime($input);
                     $where[] = "`song`.`addition_time` $sql_match_operator $input";
                 break;
                 case 'updated':
-                    $update_string   = '';
-                    $input = strtotime($input);
-                    $where[] = "`song`.`update_time` $sql_match_operator $input";
+                    $update_string = '';
+                    $input         = strtotime($input);
+                    $where[]       = "`song`.`update_time` $sql_match_operator $input";
                     break;
                 case 'recent_added':
                     $where[]          = "`addition_time`.`id` IS NOT NULL";
