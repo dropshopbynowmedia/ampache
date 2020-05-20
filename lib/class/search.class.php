@@ -714,9 +714,16 @@ class Search extends playlist_object
         );
 
         $this->types[] = array(
-            'name' => 'recent',
-            'label' => T_('Recently'),
-            'type' => 'recent',
+            'name' => 'recent_added',
+            'label' => T_('Recently added'),
+            'type' => 'recent_added',
+            'widget' => array('input', 'number')
+        );
+
+        $this->types[] = array(
+            'name' => 'recent_updated',
+            'label' => T_('Recently updated'),
+            'type' => 'recent_updated',
             'widget' => array('input', 'number')
         );
 
@@ -2151,16 +2158,36 @@ class Search extends playlist_object
                     $where[] = "`song`.`license` $sql_match_operator '$input'";
                 break;
                 case 'added':
-                    $input   = strtotime($input);
-                    $where[] = "`song`.`addition_time` $sql_match_operator $input";
+                    $addition_string = '';
+                    if ($sql_match_operator == '`addition_time`') {
+                        $where[]         = "`addition_time`.`id` IS NOT NULL";
+                        $addition_string  = "LEFT JOIN (SELECT `id` from `song` ORDER BY $sql_match_operator DESC LIMIT $input) as `addition_time` ON `song`.`id` = `recent`.`id`";
+                        $join['addition'] = true;
+                    } else {
+                        $input = strtotime($input);
+                        $where[] = "`song`.`addition_time` $sql_match_operator $input";
+                    }
                 break;
                 case 'updated':
-                    $input   = strtotime($input);
-                    $where[] = "`song`.`update_time` $sql_match_operator $input";
+                    $update_string   = '';
+                    if ($sql_match_operator == '`update_time`') {
+                        $where[]         = "`update_time`.`id` IS NOT NULL";
+                        $update_string  = "LEFT JOIN (SELECT `id` from `song` ORDER BY $sql_match_operator DESC LIMIT $input) as `update_time` ON `song`.`id` = `recent`.`id`";
+                        $join['update'] = true;
+                    } else {
+                        $input = strtotime($input);
+                        $where[] = "`song`.`update_time` $sql_match_operator $input";
+                    }
                     break;
-                case 'recent':
-                    $recent_string  = "INNER JOIN (SELECT `id` from `song` ORDER BY $sql_match_operator DESC LIMIT $input) as `recent` ON `song`.`id` = `recent`.`id`";
-                    $join['recent'] = true;
+                case 'recent_added':
+                    $where[]         = "`addition_time`.`id` IS NOT NULL";
+                    $addition_string  = "LEFT JOIN (SELECT `id` from `song` ORDER BY $sql_match_operator DESC LIMIT $input) as `addition_time` ON `song`.`id` = `recent`.`id`";
+                    $join['addition'] = true;
+                    break;
+                case 'recent_updated':
+                    $where[]         = "`update_time`.`id` IS NOT NULL";
+                    $update_string  = "LEFT JOIN (SELECT `id` from `song` ORDER BY $sql_match_operator DESC LIMIT $input) as `update_time` ON `song`.`id` = `recent`.`id`";
+                    $join['update'] = true;
                     break;
                 case 'metadata':
                     // Need to create a join for every field so we can create and / or queries with only one table
@@ -2291,8 +2318,11 @@ class Search extends playlist_object
                 $table['playlist'] = "LEFT JOIN `playlist` ON `playlist_data`.`playlist`=`playlist`.`id`";
             }
         }
-        if ($join['recent']) {
-            $table['recent'] = $recent_string;
+        if ($join['addition']) {
+            $table['addition'] = $addition_string;
+        }
+        if ($join['update']) {
+            $table['update'] = $update_string;
         }
         if ($join['catalog']) {
             $table['catalog'] = "LEFT JOIN `catalog` AS `catalog_se` ON `catalog_se`.`id`=`song`.`catalog`";
