@@ -34,7 +34,9 @@ abstract class database_object
 
     // Statistics for debugging
     public static $cache_hit = 0;
+
     private static $_enabled = false;
+    private static $_redis   = false;
 
     /**
      * get_info
@@ -192,5 +194,6 @@ abstract class database_object
     public static function _auto_init()
     {
         self::$_enabled = AmpConfig::get('memory_cache');
+        self::$_redis   = (AmpConfig::get('redis_hostname') && AmpConfig::get('redis_port'));
     } // _auto_init
 } // end database_object.abstract
