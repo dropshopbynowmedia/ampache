@@ -66,6 +66,7 @@ Check the php manual for help making your desired string. ([<https://www.php.net
 * April 2020 Translation update
 * Fix: When you had beautiful_urls enabled tracks would not parse in localplay
 * Fix: Podcast durations aren't always correct format, prep the time before trying to insert it.
+* New search options. "Recently updated" "Recently added". (the most recent number of songs)
 
 
 ## 4.1.1
