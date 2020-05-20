@@ -2158,26 +2158,13 @@ class Search extends playlist_object
                     $where[] = "`song`.`license` $sql_match_operator '$input'";
                 break;
                 case 'added':
-                    $addition_string = '';
-                    if ($sql_match_operator == '`addition_time`') {
-                        $where[]         = "`addition_time`.`id` IS NOT NULL";
-                        $addition_string  = "LEFT JOIN (SELECT `id` from `song` ORDER BY $sql_match_operator DESC LIMIT $input) as `addition_time` ON `song`.`id` = `recent`.`id`";
-                        $join['addition'] = true;
-                    } else {
-                        $input = strtotime($input);
-                        $where[] = "`song`.`addition_time` $sql_match_operator $input";
-                    }
+                    $input = strtotime($input);
+                    $where[] = "`song`.`addition_time` $sql_match_operator $input";
                 break;
                 case 'updated':
                     $update_string   = '';
-                    if ($sql_match_operator == '`update_time`') {
-                        $where[]         = "`update_time`.`id` IS NOT NULL";
-                        $update_string  = "LEFT JOIN (SELECT `id` from `song` ORDER BY $sql_match_operator DESC LIMIT $input) as `update_time` ON `song`.`id` = `recent`.`id`";
-                        $join['update'] = true;
-                    } else {
-                        $input = strtotime($input);
-                        $where[] = "`song`.`update_time` $sql_match_operator $input";
-                    }
+                    $input = strtotime($input);
+                    $where[] = "`song`.`update_time` $sql_match_operator $input";
                     break;
                 case 'recent_added':
                     $where[]          = "`addition_time`.`id` IS NOT NULL";
