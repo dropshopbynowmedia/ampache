@@ -301,13 +301,13 @@ class Search extends playlist_object
 
         $this->basetypes['recent'][] = array(
             'name' => 'add',
-            'description' => T_('recently added songs'),
+            'description' => T_('added songs'),
             'sql' => '`addition_time`'
         );
 
         $this->basetypes['recent'][] = array(
             'name' => 'upd',
-            'description' => T_('recently updated songs'),
+            'description' => T_('updated songs'),
             'sql' => '`update_time`'
         );
 
@@ -2159,7 +2159,7 @@ class Search extends playlist_object
                     $where[] = "`song`.`update_time` $sql_match_operator $input";
                     break;
                 case 'recent':
-                    $where[] = "`song`.`id` IN (SELECT `id` from `song` ORDER BY $sql_match_operator DESC LIMIT $input)";
+                    $join['recent'] = true;
                     break;
                 case 'metadata':
                     // Need to create a join for every field so we can create and / or queries with only one table
@@ -2290,7 +2290,9 @@ class Search extends playlist_object
                 $table['playlist'] = "LEFT JOIN `playlist` ON `playlist_data`.`playlist`=`playlist`.`id`";
             }
         }
-
+        if ($join['recent']) {
+            $table['recent'] = "INNER JOIN (SELECT `id` from `song` ORDER BY $sql_match_operator DESC LIMIT $input) as `recent` ON `song`.`id` = `recent`.`id`";
+        }
         if ($join['catalog']) {
             $table['catalog'] = "LEFT JOIN `catalog` AS `catalog_se` ON `catalog_se`.`id`=`song`.`catalog`";
             if (!empty($where_sql)) {
