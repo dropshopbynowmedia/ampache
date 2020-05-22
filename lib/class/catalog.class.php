@@ -2599,6 +2599,7 @@ abstract class Catalog extends database_object
     protected static function updateAlbumTags(Song $song)
     {
         $tags = self::getSongTags('album', $song->album);
+        debug_event('catalog.class', 'getSongTags Album: ' . $song->album . ': ' . implode(',', $tags), 4);
         Tag::update_tag_list(implode(',', $tags), 'album', $song->album, true);
     }
 
@@ -2609,6 +2610,7 @@ abstract class Catalog extends database_object
     protected static function updateArtistTags(Song $song)
     {
         $tags = self::getSongTags('artist', $song->artist);
+        debug_event('catalog.class', 'getSongTags Artist: ' . $song->artist . ': ' . implode(',', $tags), 4);
         Tag::update_tag_list(implode(',', $tags), 'artist', $song->artist, true);
     }
 
