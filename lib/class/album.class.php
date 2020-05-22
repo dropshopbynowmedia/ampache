@@ -1124,6 +1124,7 @@ class Album extends database_object implements library_item
         if ($current_id === null) {
             $current_id = $this->id;
         }
+        debug_event('album.class', 'Update album tags for  `' . $current_id . '`.', 4);
 
         // When current_id not empty we force to overwrite current object
         Tag::update_tag_list($tags_comma, 'album', $current_id, $force_update ? true : $override_childs);
