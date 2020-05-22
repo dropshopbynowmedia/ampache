@@ -1288,6 +1288,7 @@ class vainfo
 
         // Pull out our actual matches
         preg_match($pattern, $filepath, $matches);
+        debug_event('vainfo.class', 'Checking ' . $pattern . ' _ ' . $matches . ' on ' . $filepath, 5);
         if ($matches != null) {
             // The first element is the full match text
             $matched = array_shift($matches);
