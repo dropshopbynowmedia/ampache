@@ -1280,7 +1280,8 @@ class vainfo
         preg_match_all('/\%\w/', $pattern, $elements);
 
         // Mangle the pattern by turning the codes into regex captures
-        $pattern = preg_replace('/\%[Ty]/', '([0-9]+?)', $pattern);
+        $pattern = preg_replace('/\%[d]/', '([0-9]?)', $pattern);
+        $pattern = preg_replace('/\%[TyY]/', '([0-9]+?)', $pattern);
         $pattern = preg_replace('/\%\w/', '(.+?)', $pattern);
         $pattern = str_replace('/', '\/', $pattern);
         $pattern = str_replace(' ', '\s', $pattern);
