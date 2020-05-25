@@ -61,24 +61,35 @@ Check the php manual for help making your desired string. ([<https://www.php.net
 * NEW examples
   * docs/examples/ampache_cron.service
   * docs/examples/ampache_cron.timer
-* BUG FIXES
-  * Channel authentication
-  * IP checks when sending null proxy values
-  * Extra text in catalog API calls
-  * Gather art page layout
-  * Read vorbis rating correctly
-  * Search rules in UI failing to load with custom_metadata
-  * Warn correctly when inserting art fails
-  * Insert missing user preferences on login
-  * When you had beautiful_urls enabled tracks would not parse in localplay making them all Unknown
-  * Podcast durations aren't always correct format, prep the time before trying to insert it
-  * Subsonic playlist add/remove removing incorrect songs
-  * Search/Smartlists need to have results to be used in lists
-  * Auth issues with stats for recording and localplay
-  * Stream_urls were generated with a typo when downloading
-  * Respect album grouping using of the moment plugin
-  * Filter album title with grouping enabled. (seriously deadmau5, stop with the <> everywhere)
-  * Gravatar Plugin: Make sure https is used when force_ssl is configured
+* API: All calls that return songs now include <playlisttrack> which can be used to identify track order.
+* API: <playcount> added to objects.
+* API: Don't gather art when adding songs
+* API: Added actions to catalog_action. 'verify_catalog' 'gather_art'
+* Fix: Channel authentication
+* Fix: IP checks when sending null proxy values
+* Fix: Extra text in catalog API calls
+* Fix: Gather art page layout
+* Fix: Read vorbis rating correctly
+* Fix: Search rules in UI failing to load with custom_metadata
+* Fix: Warn correctly when inserting art fails
+* Update Composer requirements
+* Fix: Insert missing user preferences on login
+* Allow searching play times without requiring UI option
+* Added declare(strict_types=0); to lib/* and lib/class/* (requires more work before it can be enabled)
+* Fixed a lot of incorrectly typed function calls and code documentation
+* Stop showing the average rating in the web interface as stars. (show an average when multiple rate the same thing)
+* April 2020 Translation update
+* Fix: When you had beautiful_urls enabled tracks would not parse in localplay making them all Unknown
+* Fix: Podcast durations aren't always correct format, prep the time before trying to insert it
+* Fix: Subsonic playlist add/remove removing incorrect songs
+* Fix: Search/Smartlists need to have results to be used in lists
+* Fix: Auth issues with stats for recording and localplay
+* Fix: Stream_urls were generated with a typo when downloading
+* Fix: Respect album grouping using of the moment plugin
+* Fix: Filter album title with grouping enabled. (seriously deadmau5, stop with the <> everywhere)
+* Gravatar Plugin: Make sure https is used when force_ssl is configured
+* Add 250 for search form limits in the web ui
+* Add Recently updated/added to search
 
 ## 4.1.1
 * Bump API version to 400004 (4.0.0 build 004)
