@@ -496,7 +496,7 @@ class Playlist extends playlist_object
         $count = 0;
         foreach ($medias as $data) {
             if (AmpConfig::get('unique_playlist') && in_array($data['object_id'], $track_data)) {
-                self::message('error', T_("Can't add a duplicate item when check is enabled"), '400', $input['format']);
+                debug_event('playlist.class', T_("Can't add a duplicate item when check is enabled"), 3);
 
                 break;
             }
