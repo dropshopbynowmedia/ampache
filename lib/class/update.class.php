@@ -197,7 +197,7 @@ class Update
         $update_string = "* Add system option for cron based cache and create related tables.<br />";
         $version[]     = array('version' => '400008', 'description' => $update_string);
 
-        $update_string = "* Add ui option for only adding unique items to playlists.<br />";
+        $update_string = "* Add ui option for forcing unique items to playlists.<br />";
         $version[]     = array('version' => '400009', 'description' => $update_string);
 
         return $version;
@@ -1144,7 +1144,7 @@ class Update
     /**
      * update_400009
      *
-     * Add ui option for only adding unique items to playlists
+     * Add ui option for forcing unique items to playlists
      */
     public static function update_400009()
     {
