@@ -1296,7 +1296,7 @@ class Song extends database_object implements media, library_item
             "`update_time` = ? WHERE `id` = ?";
         Dba::write($sql, array($new_song->album, $new_song->year, $new_song->artist,
                                 $new_song->title, $new_song->composer, (int) $new_song->bitrate, (int) $new_song->rate, $new_song->mode,
-                                $new_song->size, $new_song->time, $new_song->track, $new_song->mbid,
+                                (int) $new_song->size, (int) $new_song->time, $new_song->track, $new_song->mbid,
                                 $update_time, $song_id));
 
         $sql = "UPDATE `song_data` SET `label` = ?, `lyrics` = ?, `language` = ?, `comment` = ?, `replaygain_track_gain` = ?, `replaygain_track_peak` = ?, " .
