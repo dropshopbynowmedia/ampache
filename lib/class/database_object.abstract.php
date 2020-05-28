@@ -194,6 +194,11 @@ abstract class database_object
      */
     public static function _auto_init()
     {
+        if (AmpConfig::get('redis_hostname') && AmpConfig::get('redis_port')) {
+            $redis = new Redis();
+            $redis->connect(AmpConfig::get('redis_hostname'), AmpConfig::get('redis_port'));
+            $GLOBALS['redis'] = $redis;
+        }
         self::$_enabled = AmpConfig::get('memory_cache');
         self::$_redis   = Core::get_global('redis');
     } // _auto_init
