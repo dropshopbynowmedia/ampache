@@ -110,13 +110,14 @@ abstract class database_object
     public static function get_from_cache($index, $object_id)
     {
         // Check if the object is set
-        if (self::$_redis->scard($index . $object_id)) {
+        if (self::$_redis->scard($index . $object_id) > 0) {
             debug_event('REDIS HIT', $index . $object_id, 5);
             self::$cache_hit++;
 
             return self::$_redis->sMembers($index . $object_id);
         }
         if (isset(self::$object_cache[$index]) && isset(self::$object_cache[$index][$object_id])) {
+            debug_event('CACHE HIT', $index . $object_id, 5);
             self::$cache_hit++;
 
             return self::$object_cache[$index][$object_id];
