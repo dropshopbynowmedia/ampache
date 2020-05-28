@@ -248,8 +248,7 @@ class Video extends database_object implements media, library_item
         if (!count($ids)) {
             return false;
         }
-        $not_cached = array_diff($ids, parent::get_cache_index('video'));
-        $idlist     = '(' . implode(',', $not_cached) . ')';
+        $idlist = '(' . implode(',', $ids) . ')';
         if ($idlist == '()') {
             return false;
         }

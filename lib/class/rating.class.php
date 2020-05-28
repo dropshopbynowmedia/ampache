@@ -92,10 +92,8 @@ class Rating extends database_object
         }
         $ratings      = array();
         $user_ratings = array();
-
-        $not_cached = array_diff($ids, parent::get_cache_index('rating_' . $type . '_user' . $user_id));
-        $idlist     = '(' . implode(',', $not_cached) . ')';
-        if ($idlist == '()' || empty($not_cached)) {
+        $idlist       = '(' . implode(',', $ids) . ')';
+        if ($idlist == '()' || empty($ids)) {
             return false;
         }
         $sql        = "SELECT `rating`, `object_id` FROM `rating` " .

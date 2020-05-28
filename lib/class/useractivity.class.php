@@ -69,9 +69,7 @@ class Useractivity extends database_object
         if (!is_array($ids) || !count($ids)) {
             return false;
         }
-
-        $not_cached = array_diff($ids, parent::get_cache_index('user_activity'));
-        $idlist     = '(' . implode(',', $not_cached) . ')';
+        $idlist = '(' . implode(',', $ids) . ')';
         if ($idlist == '()') {
             return false;
         }

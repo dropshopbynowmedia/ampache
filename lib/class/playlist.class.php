@@ -77,8 +77,7 @@ class Playlist extends playlist_object
     public static function build_cache($ids)
     {
         if (count($ids)) {
-            $not_cached = array_diff($ids, parent::get_cache_index('playlist'));
-            $idlist     = '(' . implode(',', $not_cached) . ')';
+            $idlist = '(' . implode(',', $ids) . ')';
             if ($idlist == '()') {
                 return false;
             }

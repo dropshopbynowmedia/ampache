@@ -65,9 +65,8 @@ class Userflag extends database_object
         if ($user_id === null) {
             $user_id = Core::get_global('user')->id;
         }
-        $userflags  = array();
-        $not_cached = array_diff($ids, parent::get_cache_index('userflag_' . $type . '_user' . $user_id));
-        $idlist     = '(' . implode(',', $not_cached) . ')';
+        $userflags = array();
+        $idlist    = '(' . implode(',', $ids) . ')';
         if ($idlist == '()') {
             return false;
         }

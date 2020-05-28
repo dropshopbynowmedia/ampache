@@ -492,8 +492,7 @@ class Song extends database_object implements media, library_item
         if (!is_array($song_ids) || !count($song_ids)) {
             return false;
         }
-        $not_cached = array_diff($song_ids, parent::get_cache_index('song'));
-        $idlist     = '(' . implode(',', $not_cached) . ')';
+        $idlist = '(' . implode(',', $song_ids) . ')';
         if ($idlist == '()') {
             return false;
         }

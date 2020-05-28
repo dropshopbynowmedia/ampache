@@ -112,8 +112,7 @@ class Art extends database_object
         if (!count($object_ids)) {
             return false;
         }
-        $not_cached = array_diff($object_ids, parent::get_cache_index('art'));
-        $idlist     = '(' . implode(',', $not_cached) . ')';
+        $idlist = '(' . implode(',', $object_ids) . ')';
         if ($idlist == '()') {
             return false;
         }

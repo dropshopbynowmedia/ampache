@@ -90,6 +90,9 @@ abstract class database_object
     public static function is_cached($index, $object_id)
     {
         // Make sure we've got some parents here before we dive below
+        if (self::$_redis->scard($index)) {
+            return self::$_redis->sIsMember($index . $object_id);
+        }
         if (!isset(self::$object_cache[$index])) {
             return false;
         }
@@ -107,28 +110,15 @@ abstract class database_object
     public static function get_from_cache($index, $object_id)
     {
         // Check if the object is set
+        if (self::$_redis->scard($index . $object_id)) {
+            self::$cache_hit++;
+
+            return self::$_redis->sMembers($index . $object_id);
+        }
         if (isset(self::$object_cache[$index]) && isset(self::$object_cache[$index][$object_id])) {
             self::$cache_hit++;
 
             return self::$object_cache[$index][$object_id];
-        }
-
-        return array();
-    } // get_from_cache
-
-    /**
-     * get_cache_index
-     * This attempts to retrieve the specified object from the cache we've got here
-     * @param string $index
-     * @return array
-     */
-    public static function get_cache_index($index)
-    {
-        // Check if the object is set
-        if (isset(self::$object_cache[$index])) {
-            self::$cache_hit++;
-
-            return array_keys(self::$object_cache[$index]);
         }
 
         return array();
@@ -153,7 +143,12 @@ abstract class database_object
             $value = $data;
         }
 
-        self::$object_cache[$index][$object_id] = $value;
+        // Check if the object is set
+        if (self::$_redis) {
+            self::$_redis->sAdd($index . $object_id, $value);
+        } else {
+            self::$object_cache[$index][$object_id] = $value;
+        }
 
         return true;
     } // add_to_cache
@@ -169,6 +164,9 @@ abstract class database_object
         if (!self::$_enabled) {
             return false;
         }
+        if (self::$_redis) {
+            return self::$_redis->sMembers($index);
+        }
 
         return count(self::$object_cache[$index]);
     } // get_cache_count
@@ -182,6 +180,9 @@ abstract class database_object
      */
     public static function remove_from_cache($index, $object_id)
     {
+        if (self::$_redis) {
+            self::$_redis->sRem($index . $object_id);
+        }
         if (isset(self::$object_cache[$index]) && isset(self::$object_cache[$index][$object_id])) {
             unset(self::$object_cache[$index][$object_id]);
         }
@@ -194,6 +195,6 @@ abstract class database_object
     public static function _auto_init()
     {
         self::$_enabled = AmpConfig::get('memory_cache');
-        self::$_redis   = (AmpConfig::get('redis_hostname') && AmpConfig::get('redis_port'));
+        self::$_redis   = Core::get_global('redis');
     } // _auto_init
 } // end database_object.abstract
