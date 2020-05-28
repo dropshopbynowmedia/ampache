@@ -111,6 +111,7 @@ abstract class database_object
     {
         // Check if the object is set
         if (self::$_redis->scard($index . $object_id)) {
+            debug_event('REDIS HIT', $index . $object_id, 5);
             self::$cache_hit++;
 
             return self::$_redis->sMembers($index . $object_id);
