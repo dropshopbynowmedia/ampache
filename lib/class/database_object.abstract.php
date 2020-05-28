@@ -90,8 +90,10 @@ abstract class database_object
     public static function is_cached($index, $object_id)
     {
         // Make sure we've got some parents here before we dive below
-        if (self::$_redis->scard($index)) {
-            return self::$_redis->sIsMember($index . $object_id);
+        if (self::$_redis->scard($index . $object_id) > 0) {
+            debug_event('REDIS CHECK', $index . $object_id, 5);
+
+            return self::$_redis->sIsMember($index . $object_id) > 0;
         }
         if (!isset(self::$object_cache[$index])) {
             return false;
@@ -148,9 +150,9 @@ abstract class database_object
         // Check if the object is set
         if (self::$_redis) {
             self::$_redis->sAdd($index . $object_id, $value);
-        } else {
-            self::$object_cache[$index][$object_id] = $value;
         }
+
+        self::$object_cache[$index][$object_id] = $value;
 
         return true;
     } // add_to_cache
