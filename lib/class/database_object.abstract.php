@@ -90,10 +90,10 @@ abstract class database_object
     public static function is_cached($index, $object_id)
     {
         // Make sure we've got some parents here before we dive below
-        if (self::$_redis->scard($index . $object_id) > 0) {
+        if (self::$_redis) {
             debug_event('REDIS CHECK', $index . $object_id, 5);
 
-            return self::$_redis->sIsMember($index . $object_id) > 0;
+            return self::$_redis->scard($index . $object_id) > 0;
         }
         if (!isset(self::$object_cache[$index])) {
             return false;
