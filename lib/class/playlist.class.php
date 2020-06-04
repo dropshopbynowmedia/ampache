@@ -77,10 +77,7 @@ class Playlist extends playlist_object
     public static function build_cache($ids)
     {
         if (count($ids)) {
-            $idlist = '(' . implode(',', $ids) . ')';
-            if ($idlist == '()') {
-                return false;
-            }
+            $idlist     = '(' . implode(',', $ids) . ')';
             $sql        = "SELECT * FROM `playlist` WHERE `id` IN $idlist";
             $db_results = Dba::read($sql);
 
@@ -329,7 +326,9 @@ class Playlist extends playlist_object
     {
         $songs  = self::get_songs();
         $idlist = '(' . implode(',', $songs) . ')';
-
+        if ($idlist == '()') {
+            return null;
+        }
         $sql        = "SELECT SUM(`time`) FROM `song` WHERE `id` IN $idlist";
         $db_results = Dba::read($sql);
 

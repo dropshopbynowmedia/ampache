@@ -248,10 +248,8 @@ class Video extends database_object implements media, library_item
         if (!count($ids)) {
             return false;
         }
-        $idlist = '(' . implode(',', $ids) . ')';
-        if ($idlist == '()') {
-            return false;
-        }
+
+        $idlist     = '(' . implode(',', $ids) . ')';
         $sql        = "SELECT * FROM `video` WHERE `video`.`id` IN $idlist";
         $db_results = Dba::read($sql);
 

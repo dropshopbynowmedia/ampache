@@ -93,13 +93,10 @@ class Rating extends database_object
         $ratings      = array();
         $user_ratings = array();
         $idlist       = '(' . implode(',', $ids) . ')';
-        if ($idlist == '()' || empty($ids)) {
-            return false;
-        }
-        $sql        = "SELECT `rating`, `object_id` FROM `rating` " .
-                "WHERE `user` = ? AND `object_id` IN $idlist " .
-                "AND `object_type` = ?";
-        $db_results = Dba::read($sql, array($user_id, $type));
+        $sql          = "SELECT `rating`, `object_id` FROM `rating` " .
+                        "WHERE `user` = ? AND `object_id` IN $idlist " .
+                        "AND `object_type` = ?";
+        $db_results   = Dba::read($sql, array($user_id, $type));
 
         while ($row = Dba::fetch_assoc($db_results)) {
             $user_ratings[$row['object_id']] = $row['rating'];

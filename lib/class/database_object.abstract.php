@@ -34,9 +34,7 @@ abstract class database_object
 
     // Statistics for debugging
     public static $cache_hit = 0;
-
     private static $_enabled = false;
-    private static $_redis   = false;
 
     /**
      * get_info
@@ -90,11 +88,6 @@ abstract class database_object
     public static function is_cached($index, $object_id)
     {
         // Make sure we've got some parents here before we dive below
-        if (self::$_redis) {
-            debug_event('REDIS CHECK', $index . $object_id, 5);
-
-            return self::$_redis->scard($index . $object_id) > 0;
-        }
         if (!isset(self::$object_cache[$index])) {
             return false;
         }
@@ -112,14 +105,7 @@ abstract class database_object
     public static function get_from_cache($index, $object_id)
     {
         // Check if the object is set
-        if (self::$_redis->scard($index . $object_id) > 0) {
-            debug_event('REDIS HIT', $index . $object_id, 5);
-            self::$cache_hit++;
-
-            return self::$_redis->sMembers($index . $object_id);
-        }
         if (isset(self::$object_cache[$index]) && isset(self::$object_cache[$index][$object_id])) {
-            debug_event('CACHE HIT', $index . $object_id, 5);
             self::$cache_hit++;
 
             return self::$object_cache[$index][$object_id];
@@ -131,7 +117,7 @@ abstract class database_object
     /**
      * add_to_cache
      * This adds the specified object to the specified index in the cache
-     * @param string $index
+     * @param $index
      * @param $object_id
      * @param array $data
      * @return boolean
@@ -147,33 +133,11 @@ abstract class database_object
             $value = $data;
         }
 
-        // Check if the object is set
-        if (self::$_redis) {
-            self::$_redis->sAdd($index . $object_id, $value);
-        }
-
         self::$object_cache[$index][$object_id] = $value;
 
         return true;
-    } // add_to_cache
-
-    /**
-     * get_cache_count
-     * This counts the size of the specified index in the cache
-     * @param string $index
-     * @return integer
-     */
-    public static function get_cache_count($index)
-    {
-        if (!self::$_enabled) {
-            return false;
-        }
-        if (self::$_redis) {
-            return self::$_redis->sMembers($index);
-        }
-
-        return count(self::$object_cache[$index]);
-    } // get_cache_count
+    }
+    // add_to_cache
 
     /**
      * remove_from_cache
@@ -184,9 +148,6 @@ abstract class database_object
      */
     public static function remove_from_cache($index, $object_id)
     {
-        if (self::$_redis) {
-            self::$_redis->sRem($index . $object_id);
-        }
         if (isset(self::$object_cache[$index]) && isset(self::$object_cache[$index][$object_id])) {
             unset(self::$object_cache[$index][$object_id]);
         }
@@ -198,12 +159,6 @@ abstract class database_object
      */
     public static function _auto_init()
     {
-        if (AmpConfig::get('redis_hostname') && AmpConfig::get('redis_port')) {
-            $redis = new Redis();
-            $redis->connect(AmpConfig::get('redis_hostname'), AmpConfig::get('redis_port'));
-            $GLOBALS['redis'] = $redis;
-        }
         self::$_enabled = AmpConfig::get('memory_cache');
-        self::$_redis   = Core::get_global('redis');
     } // _auto_init
 } // end database_object.abstract

@@ -69,10 +69,8 @@ class Useractivity extends database_object
         if (!is_array($ids) || !count($ids)) {
             return false;
         }
-        $idlist = '(' . implode(',', $ids) . ')';
-        if ($idlist == '()') {
-            return false;
-        }
+
+        $idlist     = '(' . implode(',', $ids) . ')';
         $sql        = "SELECT * FROM `user_activity` WHERE `id` IN $idlist";
         $db_results = Dba::read($sql);
 

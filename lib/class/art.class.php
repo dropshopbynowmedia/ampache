@@ -113,10 +113,7 @@ class Art extends database_object
             return false;
         }
         $idlist = '(' . implode(',', $object_ids) . ')';
-        if ($idlist == '()') {
-            return false;
-        }
-        $sql        = "SELECT `object_type`, `object_id`, `mime`, `size` FROM `image` WHERE `object_id` IN $idlist";
+        $sql    = "SELECT `object_type`, `object_id`, `mime`, `size` FROM `image` WHERE `object_id` IN $idlist";
         if ($type !== null) {
             $sql .= " and `object_type` = '$type'";
         }

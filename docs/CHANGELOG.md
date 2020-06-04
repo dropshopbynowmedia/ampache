@@ -11,6 +11,7 @@ Check the php manual for help making your desired string. ([<https://www.php.net
 
 * GENERAL changes
   * April 2020 Translation update
+  * May 2020 Translation update
   * Fixed a lot of incorrectly typed function calls and code documentation
   * Update Composer requirements
   * Allow searching play times without requiring UI option
