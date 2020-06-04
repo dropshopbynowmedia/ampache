@@ -56,7 +56,7 @@ function get_cron_date()
  * Run live memory cache processes.
  * @param integer $user_id
  */
-function run_cron_cache($user_id)
+function run_cron_cache($user_id = 0)
 {
     if (AmpConfig::get('memory_cache')) {
         debug_event('cron', 'Filling memory cache', 4);
