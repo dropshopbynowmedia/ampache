@@ -37,6 +37,7 @@ class Search extends playlist_object
     public $random         = 0;
     public $limit          = 0;
     public $last_count     = 0;
+    public $date           = 0;
 
     public $basetypes;
     public $types;
@@ -67,6 +68,7 @@ class Search extends playlist_object
             }
             $this->rules = json_decode((string) $this->rules, true);
         }
+        $this->date = time();
 
         // Define our basetypes
         $this->set_basetypes();
@@ -1232,6 +1234,7 @@ class Search extends playlist_object
                 'object_type' => $this->searchtype
             );
         }
+        $this->date = time();
         $this->set_last_count(count($results));
 
         return $results;
@@ -1303,6 +1306,28 @@ class Search extends playlist_object
 
         return $results;
     }
+
+    /**
+     * get_total_duration
+     * Get the total duration of all songs.
+     * @param array $songs
+     * @return integer
+     */
+    public static function get_total_duration($songs)
+    {
+        $song_ids = array();
+        foreach ($songs as $objects) {
+            $song_ids[] = (string) $objects['object_id'];
+        }
+        $idlist = '(' . implode(',', $song_ids) . ')';
+
+        $sql        = "SELECT SUM(`time`) FROM `song` WHERE `id` IN $idlist";
+        $db_results = Dba::read($sql);
+
+        $results = Dba::fetch_row($db_results);
+
+        return (int) $results['0'];
+    } // get_total_duration
 
     /**
      * name_to_basetype
