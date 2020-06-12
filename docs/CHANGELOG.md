@@ -10,6 +10,7 @@ e.g. "Y/m/d H:i" will convert to "2020/04/14 10:42"
 Check the php manual for help making your desired string. ([<https://www.php.net/manual/en/function.date.php>])
 
 * GENERAL changes
+  * June 8 2020 updated component installer and php-cs-fixer package.
   * April 2020 Translation update
   * May 2020 Translation update
   * Fixed a lot of incorrectly typed function calls and code documentation
@@ -19,6 +20,7 @@ Check the php manual for help making your desired string. ([<https://www.php.net
   * Stop showing the average rating in the web interface as stars. (show an average when available as text separately)
   * Add 250 for search form limits in the web ui. (Jump from 100 to 500 is pretty big)
   * Add Recently updated/added to search rules
+  * Gravatar Plugin: Make sure https is used when force_ssl is configured
 * API changes
   * Bump API version to 410001 (4.1.0 build 001)
   * All calls that return songs now include <playlisttrack> which can be used to identify track order.
@@ -73,13 +75,7 @@ Check the php manual for help making your desired string. ([<https://www.php.net
 * Fix: Read vorbis rating correctly
 * Fix: Search rules in UI failing to load with custom_metadata
 * Fix: Warn correctly when inserting art fails
-* Update Composer requirements
 * Fix: Insert missing user preferences on login
-* Allow searching play times without requiring UI option
-* Added declare(strict_types=0); to lib/* and lib/class/* (requires more work before it can be enabled)
-* Fixed a lot of incorrectly typed function calls and code documentation
-* Stop showing the average rating in the web interface as stars. (show an average when multiple rate the same thing)
-* April 2020 Translation update
 * Fix: When you had beautiful_urls enabled tracks would not parse in localplay making them all Unknown
 * Fix: Podcast durations aren't always correct format, prep the time before trying to insert it
 * Fix: Subsonic playlist add/remove removing incorrect songs
@@ -88,9 +84,7 @@ Check the php manual for help making your desired string. ([<https://www.php.net
 * Fix: Stream_urls were generated with a typo when downloading
 * Fix: Respect album grouping using of the moment plugin
 * Fix: Filter album title with grouping enabled. (seriously deadmau5, stop with the <> everywhere)
-* Gravatar Plugin: Make sure https is used when force_ssl is configured
-* Add 250 for search form limits in the web ui
-* Add Recently updated/added to search
+* Update Composer requirements (Fix CVE-2020-13625 in phpmailer)
 
 ## 4.1.1
 * Bump API version to 400004 (4.0.0 build 004)
