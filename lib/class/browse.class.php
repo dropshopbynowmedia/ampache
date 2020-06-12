@@ -206,11 +206,11 @@ class Browse extends Query
         switch ($type) {
             case 'song':
                 $box_title = T_('Songs') . $match;
-                Song::build_cache($object_ids, $limit_threshold);
+                //Song::build_cache($object_ids, $limit_threshold);
                 $box_req = AmpConfig::get('prefix') . UI::find_template('show_songs.inc.php');
             break;
             case 'album':
-                Album::build_cache($object_ids);
+                //Album::build_cache($object_ids);
                 $box_title         = T_('Albums') . $match;
                 $allow_group_disks = false;
                 if (is_array($argument)) {
@@ -230,7 +230,7 @@ class Browse extends Query
             break;
             case 'artist':
                 $box_title = T_('Artists') . $match;
-                Artist::build_cache($object_ids, true, $limit_threshold);
+                //Artist::build_cache($object_ids, true, $limit_threshold);
                 $box_req = AmpConfig::get('prefix') . UI::find_template('show_artists.inc.php');
             break;
             case 'live_stream':
@@ -238,7 +238,7 @@ class Browse extends Query
                 $box_req   = AmpConfig::get('prefix') . UI::find_template('show_live_streams.inc.php');
             break;
             case 'playlist':
-                Playlist::build_cache($object_ids);
+                //Playlist::build_cache($object_ids);
                 $box_title = T_('Playlists') . $match;
                 $box_req   = AmpConfig::get('prefix') . UI::find_template('show_playlists.inc.php');
             break;
@@ -264,12 +264,12 @@ class Browse extends Query
                 $box_req   = AmpConfig::get('prefix') . UI::find_template('show_manage_shoutbox.inc.php');
             break;
             case 'tag':
-                Tag::build_cache($object_ids);
+                //Tag::build_cache($object_ids);
                 $box_title = T_('Tag Cloud');
                 $box_req   = AmpConfig::get('prefix') . UI::find_template('show_tagcloud.inc.php');
             break;
             case 'video':
-                Video::build_cache($object_ids);
+                //Video::build_cache($object_ids);
                 $video_type = 'video';
                 $box_title  = T_('Videos');
                 $box_req    = AmpConfig::get('prefix') . UI::find_template('show_videos.inc.php');
